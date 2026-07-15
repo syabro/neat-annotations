@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>neat-annotations — neat hand-drawn CSS annotations</title>
+<meta name="description" content="Neat hand-drawn CSS annotations: arrows and handwritten labels. Pure CSS, no JavaScript.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="neat-annotations.css">
+<style>
+  body {
+    margin: 0;
+    background: #faf9f7;
+    color: #2c2926;
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 760px; margin: 0 auto; padding: 56px 24px 80px; }
+  h1 {
+    font-family: 'Shantell Sans', cursive;
+    font-size: 2.4rem;
+    font-weight: 500;
+    margin: 0 0 12px;
+  }
+  h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin: 72px 0 8px;
+  }
+  .tagline { max-width: 560px; margin: 0 0 84px; color: #57524d; }
+  .muted { color: #8a827e; }
+  a { color: inherit; }
+
+  .demo {
+    background: #fff;
+    border: 1px solid #eae7e3;
+    border-radius: 12px;
+    padding: 88px 32px;
+    overflow-x: auto;
+    font: 15px/1.7 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: #57524d;
+  }
+  .demo .line { white-space: pre; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    background: #fff;
+    border: 1px solid #eae7e3;
+    border-radius: 12px;
+  }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+
+  .colors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px 56px;
+    background: #fff;
+    border: 1px solid #eae7e3;
+    border-radius: 12px;
+    padding: 40px 32px 104px;
+    margin-top: 24px;
+  }
+
+  pre {
+    background: #f1efec;
+    border-radius: 12px;
+    padding: 20px 24px;
+    overflow-x: auto;
+    font: 14px/1.7 ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: #44403c;
+  }
+  footer { margin-top: 88px; font-size: 0.95rem; color: #8a827e; }
+</style>
+</head>
+<body>
+<main>
+  <h1>neat-annotations</h1>
+  <p class="tagline">Neat hand-drawn <span class="ann ann-n ann-amber" data-note="like this">annotations</span> for your page: arrows and handwritten labels. Pure CSS, no JavaScript, one small file.</p>
+
+  <h2>In the wild</h2>
+  <p class="muted">Wrap any inline element — the arrow and the note are drawn around it.</p>
+  <div class="demo">
+    <div class="line">- <span class="ann ann-n ann-amber" data-note="open task">[ ]</span> <span class="ann ann-s ann-blue" data-note="stable ID">CLI-042</span> Add export command    <span class="ann ann-se ann-green" data-note="tag">#cli</span> <span class="ann ann-sw ann-red" data-note="priority">!high</span> <span class="ann ann-nw ann-purple" data-note="custom field">@blocked_by:CLI-041</span></div>
+    <div class="line">      <span class="ann ann-n" data-note="description">Write task output as JSON for scripts and agents</span></div>
+  </div>
+
+  <h2>8 directions</h2>
+  <p class="muted">The class names where the arrow points: <code>ann-n</code> points north, so the annotation sits below its target.</p>
+  <div class="grid">
+    <div class="cell"><span class="ann ann-n" data-note=".ann-n">target</span></div>
+    <div class="cell"><span class="ann ann-ne" data-note=".ann-ne">target</span></div>
+    <div class="cell"><span class="ann ann-e" data-note=".ann-e">target</span></div>
+    <div class="cell"><span class="ann ann-se" data-note=".ann-se">target</span></div>
+    <div class="cell"><span class="ann ann-s" data-note=".ann-s">target</span></div>
+    <div class="cell"><span class="ann ann-sw" data-note=".ann-sw">target</span></div>
+    <div class="cell"><span class="ann ann-w" data-note=".ann-w">target</span></div>
+    <div class="cell"><span class="ann ann-nw" data-note=".ann-nw">target</span></div>
+  </div>
+
+  <h2>Colors</h2>
+  <p class="muted">Five built-in colors plus a warm-gray default. Set <code>--ann-color</code> for your own.</p>
+  <div class="colors">
+    <span class="ann ann-n" data-note="default">plain</span>
+    <span class="ann ann-n ann-amber" data-note="ann-amber">amber</span>
+    <span class="ann ann-n ann-blue" data-note="ann-blue">blue</span>
+    <span class="ann ann-n ann-green" data-note="ann-green">green</span>
+    <span class="ann ann-n ann-red" data-note="ann-red">red</span>
+    <span class="ann ann-n ann-purple" data-note="ann-purple">purple</span>
+  </div>
+
+  <h2>Use it</h2>
+  <pre><code>&lt;link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/syabro/neat-annotations/neat-annotations.css"&gt;
+
+&lt;!-- optional, for the handwritten look --&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"&gt;
+
+&lt;span class="ann ann-n ann-amber" data-note="open task"&gt;[ ]&lt;/span&gt;</code></pre>
+  <p>Or just copy <a href="https://github.com/syabro/neat-annotations/blob/master/neat-annotations.css">neat-annotations.css</a> into your project — it is self-contained.</p>
+
+  <footer>MIT · <a href="https://github.com/syabro/neat-annotations">GitHub</a> · extracted from the mdtask landing page</footer>
+</main>
+</body>
+</html>

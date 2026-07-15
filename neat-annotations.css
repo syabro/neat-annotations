@@ -1,0 +1,129 @@
+/* neat-annotations — neat hand-drawn CSS annotations: arrows + handwritten labels.
+   https://github.com/syabro/neat-annotations · MIT license.
+   Labels look best with the Shantell Sans font (falls back to system cursive). */
+
+.ann {
+  --ann-color: oklch(0.62 0.005 30);
+  --ann-font: 'Shantell Sans', cursive;
+  --ann-target-gap: 5px;
+  --ann-label-gap: 6px;
+  --ann-lower-label-gap: -4px;
+  --ann-arrow-x: 0px;
+  --ann-text-x: 0px;
+  --ann-arrow-y: 0px;
+  --ann-text-y: 5px;
+  --ann-rotate: -4deg;
+  position: relative;
+  display: inline-block;
+  overflow: visible;
+  line-height: 1.15;
+  border-radius: 3px;
+  background: color-mix(in oklch, var(--ann-color) 10%, transparent);
+  box-shadow:
+    -0.3em 0 0 0 color-mix(in oklch, var(--ann-color) 10%, transparent),
+    0.3em 0 0 0 color-mix(in oklch, var(--ann-color) 10%, transparent),
+    0 0 0 1px color-mix(in oklch, var(--ann-color) 10%, transparent);
+}
+
+.ann::after {
+  content: attr(data-note);
+  position: absolute;
+  z-index: 4;
+  width: max-content;
+  max-width: 150px;
+  transform: rotate(var(--ann-rotate));
+  font-family: var(--ann-font);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--ann-color);
+  opacity: .9;
+  white-space: normal;
+  pointer-events: none;
+}
+
+.ann::before {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  width: 46px;
+  height: 38px;
+  transform-origin: 50% 50%;
+  background: var(--ann-color);
+  opacity: .9;
+  pointer-events: none;
+}
+
+.ann-amber { --ann-color: #b8751a; }
+.ann-blue { --ann-color: #3b72c4; }
+.ann-green { --ann-color: #2f8f5b; }
+.ann-red { --ann-color: #c45a38; }
+.ann-purple { --ann-color: #8657c8; }
+
+.ann-n::before {
+  left: calc(50% - 23px + var(--ann-arrow-x));
+  top: calc(100% + var(--ann-target-gap) - 4px + var(--ann-arrow-y));
+  -webkit-mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M23 35 C22 26 22 15 23 4' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M17 10 L23 3 L29 10' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M23 35 C22 26 22 15 23 4' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M17 10 L23 3 L29 10' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.ann-n::after { left: calc(50% + var(--ann-text-x)); top: calc(100% + var(--ann-target-gap) + 31px + var(--ann-lower-label-gap) + var(--ann-text-y)); transform: translateX(-50%) rotate(var(--ann-rotate)); }
+
+.ann-ne::before {
+  left: calc(50% - 40px + var(--ann-arrow-x));
+  top: calc(100% + var(--ann-target-gap) - 6px + var(--ann-arrow-y));
+  transform: translateX(-10%);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 32 C16 30 28 18 40 6' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M30 10 L40 6 L36 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 32 C16 30 28 18 40 6' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M30 10 L40 6 L36 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.ann-ne::after { left: calc(50% - 34px + var(--ann-text-x)); top: calc(100% + var(--ann-target-gap) + 26px + var(--ann-lower-label-gap) + var(--ann-text-y)); transform: translateX(-60%) rotate(var(--ann-rotate)); }
+
+.ann-e::before {
+  left: calc(-1 * var(--ann-target-gap) - 43px + var(--ann-arrow-x));
+  top: calc(50% - 19px + var(--ann-arrow-y));
+  -webkit-mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 19 C15 18 31 18 43 19' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M36 13 L43 19 L36 25' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 19 C15 18 31 18 43 19' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M36 13 L43 19 L36 25' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.ann-e::after { right: calc(100% + var(--ann-target-gap) + 39px + var(--ann-label-gap) - var(--ann-text-x)); top: calc(50% + var(--ann-text-y)); transform: translateY(-50%) rotate(var(--ann-rotate)); }
+
+.ann-se::before {
+  left: calc(50% - 40px + var(--ann-arrow-x));
+  top: calc(-1 * var(--ann-target-gap) - 32px + var(--ann-arrow-y));
+  transform: translateX(-10%);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 6 C16 8 28 20 40 32' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M36 22 L40 32 L30 28' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 6 C16 8 28 20 40 32' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M36 22 L40 32 L30 28' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.ann-se::after { left: calc(50% - 34px + var(--ann-text-x)); bottom: calc(100% + var(--ann-target-gap) + 26px + var(--ann-label-gap) - var(--ann-text-y)); transform: translateX(-60%) rotate(var(--ann-rotate)); }
+
+.ann-s::before {
+  left: calc(50% - 23px + var(--ann-arrow-x));
+  top: calc(-1 * var(--ann-target-gap) - 35px + var(--ann-arrow-y));
+  -webkit-mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M23 4 C22 13 22 24 23 35' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M17 29 L23 36 L29 29' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M23 4 C22 13 22 24 23 35' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M17 29 L23 36 L29 29' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.ann-s::after { left: calc(50% + var(--ann-text-x)); bottom: calc(100% + var(--ann-target-gap) + 31px + var(--ann-label-gap) - var(--ann-text-y)); transform: translateX(-50%) rotate(var(--ann-rotate)); }
+
+.ann-sw::before {
+  left: calc(50% - 6px + var(--ann-arrow-x));
+  top: calc(-1 * var(--ann-target-gap) - 32px + var(--ann-arrow-y));
+  transform: translateX(10%);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 6 C30 8 18 20 6 32' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M10 22 L6 32 L16 28' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 6 C30 8 18 20 6 32' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M10 22 L6 32 L16 28' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.ann-sw::after { left: calc(50% + 34px + var(--ann-text-x)); bottom: calc(100% + var(--ann-target-gap) + 26px + var(--ann-label-gap) - var(--ann-text-y)); transform: translateX(-40%) rotate(var(--ann-rotate)); }
+
+.ann-w::before {
+  left: calc(100% + var(--ann-target-gap) - 3px + var(--ann-arrow-x));
+  top: calc(50% - 19px + var(--ann-arrow-y));
+  -webkit-mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M43 19 C32 18 15 18 3 19' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M10 13 L3 19 L10 25' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M43 19 C32 18 15 18 3 19' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M10 13 L3 19 L10 25' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.ann-w::after { left: calc(100% + var(--ann-target-gap) + 40px + var(--ann-label-gap) + var(--ann-text-x)); top: calc(50% + var(--ann-text-y)); transform: translateY(-50%) rotate(var(--ann-rotate)); }
+
+.ann-nw::before {
+  left: calc(50% - 6px + var(--ann-arrow-x));
+  top: calc(100% + var(--ann-target-gap) - 6px + var(--ann-arrow-y));
+  transform: translateX(10%);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 32 C30 30 18 18 6 6' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M16 10 L6 6 L10 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 32 C30 30 18 18 6 6' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M16 10 L6 6 L10 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.ann-nw::after { left: calc(50% + 34px + var(--ann-text-x)); top: calc(100% + var(--ann-target-gap) + 26px + var(--ann-lower-label-gap) + var(--ann-text-y)); transform: translateX(-40%) rotate(var(--ann-rotate)); }
