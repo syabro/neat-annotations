@@ -45,9 +45,8 @@
   .muted { margin-top: 8px; color: var(--ink-2); }
   a { color: #06c; text-decoration: none; }
   a:hover { text-decoration: underline; }
-  code, pre { font-family: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-  code { padding: .05em .35em; border-radius: 4px; background: var(--code-bg); font-size: .9rem; font-weight: 500; }
-  .demo, .grid, .colors, pre { background: var(--surface); box-shadow: var(--panel-shadow); }
+  code { padding: .05em .35em; border-radius: 4px; background: var(--code-bg); font: 500 .9rem "SF Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .demo, .grid, .colors, .code-copy { background: var(--surface); box-shadow: var(--panel-shadow); }
 
   .demo {
     width: fit-content;
@@ -91,18 +90,34 @@
     border-radius: 12px;
   }
 
-  pre {
-    margin: 16px 0;
-    padding: 16px 18px;
-    overflow-x: auto;
-    border-radius: 12px;
+  .use-step { margin-top: 16px; }
+  .use-step + .use-step { margin-top: 28px; }
+  .use-label { color: var(--ink-2); font-size: 14px; font-weight: 600; }
+  .code-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; gap: 8px; margin-top: 8px; }
+  .code-copy { min-width: 0; border-radius: 12px; text-align: left; }
+  .code-copy pre { margin: 0; padding: 16px; overflow-x: auto; scrollbar-width: none; }
+  .code-copy pre::-webkit-scrollbar { display: none; }
+  .code-copy code { padding: 0; background: transparent; font-size: 13px; line-height: 1.6; white-space: pre; }
+  .copy-button {
+    display: block;
+    min-width: 76px;
+    margin: 0;
+    padding: 8px 14px;
+    border: 1px solid rgba(0, 0, 0, .12);
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
     color: var(--ink);
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 1.6;
-    text-align: left;
+    font: 600 13px/1.4 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    cursor: pointer;
   }
-  pre code { padding: 0; background: transparent; font-size: inherit; font-weight: inherit; }
+  .copy-button:hover { background: var(--code-bg); }
+  .copy-button:focus-visible { outline: 2px solid rgba(0, 102, 204, .35); outline-offset: 2px; }
+  .syntax-punctuation { color: #6e7781; }
+  .syntax-tag { color: #116329; }
+  .syntax-attr { color: #953800; }
+  .syntax-string { color: #0a3069; }
+  .use-note { margin-top: 8px; color: var(--ink-2); font-size: 14px; }
   footer { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--rule); color: var(--ink-2); }
 
   @media (max-width: 800px) {
@@ -160,17 +175,73 @@
   </div>
 
   <h2>Use it</h2>
-  <pre><code>&lt;link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/syabro/neat-annotations/neat-annotations.css"&gt;
-
-&lt;!-- optional, for the handwritten look --&gt;
-&lt;link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400;500;600&amp;display=swap"
-      rel="stylesheet"&gt;
-
-&lt;span class="ann ann-n ann-amber" data-note="open task"&gt;[ ]&lt;/span&gt;</code></pre>
-  <p>Or just copy <a href="https://github.com/syabro/neat-annotations/blob/master/neat-annotations.css">neat-annotations.css</a> into your project — it is self-contained.</p>
+  <div class="use-step">
+    <p class="use-label">1. Get the CSS</p>
+    <div class="code-line">
+      <div class="code-copy">
+        <pre><code><span class="syntax-punctuation">&lt;</span><span class="syntax-tag">link</span> <span class="syntax-attr">rel</span><span class="syntax-punctuation">=</span><span class="syntax-string">"stylesheet"</span> <span class="syntax-attr">href</span><span class="syntax-punctuation">=</span><span class="syntax-string">"https://cdn.jsdelivr.net/gh/syabro/neat-annotations/neat-annotations.css"</span><span class="syntax-punctuation">&gt;</span></code></pre>
+      </div>
+      <button class="copy-button" type="button" aria-label="Copy CSS link" aria-live="polite">Copy</button>
+    </div>
+    <p class="use-note">Or download <a href="https://cdn.jsdelivr.net/gh/syabro/neat-annotations/neat-annotations.css">neat-annotations.css</a> and link it locally.</p>
+  </div>
+  <div class="use-step">
+    <p class="use-label">2. Optional: handwritten font</p>
+    <div class="code-line">
+      <div class="code-copy">
+        <pre><code><span class="syntax-punctuation">&lt;</span><span class="syntax-tag">link</span> <span class="syntax-attr">href</span><span class="syntax-punctuation">=</span><span class="syntax-string">"https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400;500;600&amp;display=swap"</span> <span class="syntax-attr">rel</span><span class="syntax-punctuation">=</span><span class="syntax-string">"stylesheet"</span><span class="syntax-punctuation">&gt;</span></code></pre>
+      </div>
+      <button class="copy-button" type="button" aria-label="Copy optional font link" aria-live="polite">Copy</button>
+    </div>
+    <p class="use-note">Skip this and labels fall back to <code>cursive</code>.</p>
+  </div>
+  <div class="use-step">
+    <p class="use-label">3. Write an annotation</p>
+    <div class="code-line">
+      <div class="code-copy">
+        <pre><code><span class="syntax-punctuation">&lt;</span><span class="syntax-tag">span</span> <span class="syntax-attr">class</span><span class="syntax-punctuation">=</span><span class="syntax-string">"ann ann-n ann-amber"</span> <span class="syntax-attr">data-note</span><span class="syntax-punctuation">=</span><span class="syntax-string">"open task"</span><span class="syntax-punctuation">&gt;</span>[ ]<span class="syntax-punctuation">&lt;/</span><span class="syntax-tag">span</span><span class="syntax-punctuation">&gt;</span></code></pre>
+      </div>
+      <button class="copy-button" type="button" aria-label="Copy annotation markup" aria-live="polite">Copy</button>
+    </div>
+  </div>
 
   <footer>MIT · <a href="https://github.com/syabro/neat-annotations">GitHub</a> · extracted from the mdtask landing page</footer>
 </main>
+<script>
+  async function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    const field = document.createElement('textarea');
+    field.value = text;
+    field.setAttribute('readonly', '');
+    field.style.position = 'fixed';
+    field.style.opacity = '0';
+    document.body.appendChild(field);
+    field.select();
+    const copied = document.execCommand('copy');
+    field.remove();
+    if (!copied) throw new Error('Copy failed');
+  }
+
+  document.querySelectorAll('.copy-button').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const code = button.closest('.code-line').querySelector('code');
+      try {
+        await copyText(code.textContent);
+        button.textContent = 'Copied';
+      } catch {
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        button.textContent = 'Selected';
+      }
+      window.setTimeout(() => { button.textContent = 'Copy'; }, 1500);
+    });
+  });
+</script>
 </body>
 </html>
