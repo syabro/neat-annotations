@@ -24,6 +24,7 @@
     --rule: #d2d2d7;
     --link: #06c;
     --demo-ink: #424245;
+    --mdtask-bg: oklch(0.977 0.00125 30);
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
@@ -34,6 +35,7 @@
     --rule: #3a3a3c;
     --link: #75aaff;
     --demo-ink: #d1d1d6;
+    --mdtask-bg: #1d1d1f;
   }
   * { box-sizing: border-box; }
   body {
@@ -43,7 +45,11 @@
     font: 16px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-  main { position: relative; width: calc(100% - 48px); max-width: 800px; margin: 0 auto; padding: 56px 0 160px; text-align: center; }
+  main { position: relative; width: calc(100% - 48px); max-width: 800px; margin: 0 auto; padding: 0 0 160px; text-align: center; }
+  .hero { position: relative; display: grid; min-height: 100svh; align-content: center; }
+  .hero-scroll { position: absolute; bottom: 64px; left: 50%; color: var(--ink-2); font: 400 15px/1.1 "Shantell Sans", cursive; text-decoration: none; white-space: nowrap; transform: translateX(-50%) rotate(-4deg); }
+  .hero-scroll:hover { color: var(--ink); text-decoration: none; }
+  .hero-scroll::after { content: ""; position: absolute; top: calc(100% + 6px); left: 50%; width: 46px; height: 38px; transform: translateX(-50%); -webkit-mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M23 4 C22 13 22 24 23 35' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M17 29 L23 36 L29 29' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg width='46' height='38' viewBox='0 0 46 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M23 4 C22 13 22 24 23 35' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M17 29 L23 36 L29 29' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; background: currentColor; }
   p { margin: 0; }
   h1 {
     margin: 0 0 10px;
@@ -57,7 +63,7 @@
     font-weight: 600;
     letter-spacing: -.005em;
   }
-  .page-intro { margin: 0 0 96px; color: var(--ink-2); }
+  .page-intro { margin: 0; color: var(--ink-2); }
   .mdtask-note,
   .palette-note { margin-top: 8px; color: var(--ink-2); }
   a { color: var(--link); text-decoration: none; }
@@ -67,6 +73,7 @@
   .compass, .palette { background: var(--surface); }
   .theme-toggle {
     position: absolute;
+    z-index: 1;
     top: 54px;
     right: 0;
     display: grid;
@@ -86,18 +93,25 @@
   :root[data-theme="dark"] .theme-toggle-moon { display: none; }
   :root[data-theme="dark"] .theme-toggle-sun { display: block; }
 
+  .wild { padding: 150px 0; background: var(--mdtask-bg); box-shadow: 0 0 0 100vmax var(--mdtask-bg); clip-path: inset(0 -100vmax); }
+  .wild h2 { margin-top: 0; }
   .mdtask-demo {
     width: fit-content;
     max-width: 100%;
     margin: 16px auto 0;
-    padding: 55px 32px;
-    overflow-x: auto;
-    border-radius: 12px;
-    background: transparent;
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: 0 0 0 1px rgba(24, 26, 34, .06), 0 1px 2px rgba(24, 26, 34, .05), 0 2px 4px rgba(24, 26, 34, .05), 0 4px 8px rgba(24, 26, 34, .05), 0 8px 16px rgba(24, 26, 34, .05), 0 16px 32px rgba(24, 26, 34, .05), 0 32px 64px rgba(24, 26, 34, .05);
     color: var(--demo-ink);
     text-align: left;
     font: 500 14px/1.7 "SF Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
+  :root[data-theme="dark"] .mdtask-demo { box-shadow: 0 0 0 1px rgba(255, 255, 255, .06), 0 16px 48px rgba(0, 0, 0, .28); }
+  .mdtask-window-head { display: flex; align-items: center; padding: 7px 12px; border-radius: 9px 9px 0 0; background: light-dark(oklch(0.992 0.00085 30), #202022); }
+  .mdtask-window-dots { display: flex; gap: 5px; }
+  .mdtask-window-dots i { width: 9px; height: 9px; border-radius: 99px; background: oklch(0.84 0.0025 30); }
+  .mdtask-window-name { margin-left: 12px; color: light-dark(oklch(0.62 0.0046 30), #8e8e93); font-size: 12.5px; font-weight: 400; line-height: 1.5; }
+  .mdtask-window-body { padding: 95px 32px; overflow-x: auto; }
   .mdtask-demo .mdtask-row { white-space: pre; }
   .mdtask-source { margin-top: 8px; color: var(--ink-2); font-size: 13px; text-align: center; }
 
@@ -225,11 +239,12 @@
     .palette { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 76px; }
   }
   @media (max-width: 560px) {
-    main { width: calc(100% - 40px); padding: 36px 0 100px; }
+    main { width: calc(100% - 40px); padding: 0 0 100px; }
     .theme-toggle { top: 34px; }
-    .page-intro { margin-bottom: 80px; }
+    .hero-scroll { bottom: 52px; }
     .page-intro-rest { display: block; margin-top: 42px; }
     h2 { margin-top: 80px; }
+    .wild { padding: 80px 0; }
     .usage { margin-top: 80px; padding: 24px 12px 28px; }
     .mark-demo { gap: 32px; }
     .mdtask-demo { font-size: 13px; }
@@ -246,16 +261,27 @@
     <svg class="theme-toggle-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"></path></svg>
     <svg class="theme-toggle-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg>
   </button>
-  <h1>neat-annotations</h1>
-  <p class="page-intro">Neat hand-drawn annotations<span class="page-intro-rest"> for your page: arrows and <span class="ann ann-nw ann-amber" data-note="like this">handwritten labels</span>.<br>Pure CSS, no JavaScript, one small file.</span></p>
+  <header class="hero">
+    <h1>neat-annotations</h1>
+    <p class="page-intro">Neat hand-drawn annotations<span class="page-intro-rest"> for your page: arrows and <span class="ann ann-nw ann-amber" data-note="like this">handwritten labels</span>.<br>Pure CSS, no JavaScript, one small file.</span></p>
+    <a class="hero-scroll" href="#in-the-wild">Scroll down for more info</a>
+  </header>
 
+  <section class="wild" id="in-the-wild">
   <h2>In the wild</h2>
   <p class="mdtask-note">Wrap any inline element — the arrow and the note are drawn around it.</p>
   <div class="mdtask-demo">
-    <div class="mdtask-row">- <span class="ann ann-n ann-amber" data-note="open task">[ ]</span> <span class="ann ann-s ann-blue" data-note="stable ID">CLI-042</span> Add export command    <span class="ann ann-se ann-green" data-note="tag">#cli</span> <span class="ann ann-sw ann-red" data-note="priority">!high</span> <span class="ann ann-nw ann-purple" data-note="custom field">@blocked_by:CLI-041</span></div>
-    <div class="mdtask-row">      <span class="ann ann-n" data-note="description">Write task output as JSON for scripts and agents</span></div>
+    <div class="mdtask-window-head">
+      <span class="mdtask-window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="mdtask-window-name">docs/specs/cli.md</span>
+    </div>
+    <div class="mdtask-window-body">
+      <div class="mdtask-row">- <span class="ann ann-n ann-amber" data-note="open task">[ ]</span> <span class="ann ann-s ann-blue" data-note="stable ID">CLI-042</span> Add export command    <span class="ann ann-se ann-green" data-note="tag">#cli</span> <span class="ann ann-sw ann-red" data-note="priority">!high</span> <span class="ann ann-nw ann-purple" data-note="custom field">@blocked_by:CLI-041</span></div>
+      <div class="mdtask-row">      <span class="ann ann-n" data-note="description">Write task output as JSON for scripts and agents</span></div>
+    </div>
   </div>
   <p class="mdtask-source">Example from <a href="https://mdtask.dev">mdtask.dev</a>.</p>
+  </section>
 
   <section class="usage">
   <h2>Use it</h2>
