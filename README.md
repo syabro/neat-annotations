@@ -59,6 +59,12 @@ Set any CSS color directly on the annotation:
 
 Annotations are positioned outside the element and don't reserve space — give annotated lines some breathing room (margins).
 
+## Accessibility
+
+Annotations are visual enhancements. Do not use `data-note` as the only source of instructions, status, validation, or other essential information. When a note matters to understanding or operating the page, repeat it in visible HTML or connect a real description to the target with `aria-describedby`.
+
+The `ann-rainbow` animation respects `prefers-reduced-motion`.
+
 ## License
 
 MIT
