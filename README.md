@@ -2,6 +2,8 @@
 
 Neat hand-drawn CSS annotations: arrows and handwritten labels pointing at things on your page. Pure CSS, no JavaScript, no build step — one self-contained file.
 
+<img src="social-preview.png" alt="neat-annotations preview" width="500">
+
 **[Demo →](https://syabro.github.io/neat-annotations/)**
 
 ## Use
