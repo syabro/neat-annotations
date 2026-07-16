@@ -26,7 +26,7 @@ Then wrap any inline element:
 
 ## API
 
-Combine three things: the base class, a direction, and (optionally) a color. The note text comes from the `data-note` attribute.
+Start with the base class, then add a direction and color when needed. The note text comes from `data-note`; without it, the element keeps only its color highlight.
 
 **Directions** — where the arrow points (`ann-n` points north, so the annotation sits below its target):
 
@@ -39,7 +39,19 @@ Combine three things: the base class, a direction, and (optionally) a color. The
 Set any CSS color directly on the annotation:
 
 ```html
-<span class="ann ann-n" data-note="#ff1493" style="--ann-color: #ff1493">hot pink</span>
+<span class="ann ann-n" data-note="..." style="--ann-color: #ff1493">hot pink</span>
+```
+
+**Highlight only** — use an annotation as a text marker by omitting `data-note` and the direction class:
+
+```html
+<span class="ann ann-amber">important</span>
+```
+
+**Target highlight** — add `ann-no-mark` when the target already has its own fill:
+
+```html
+<span class="ann ann-n ann-purple ann-no-mark" data-note="keeps its own fill"><span class="badge">stable</span></span>
 ```
 
 **CSS variables** — set them on the element for fine-tuning:
@@ -47,7 +59,7 @@ Set any CSS color directly on the annotation:
 | Variable | Default | What it does |
 | --- | --- | --- |
 | `--ann-color` | warm gray | arrow and label color |
-| `--ann-mark` | 10% annotation color | target highlight; set to `transparent` to remove it |
+| `--ann-mark` | 10% annotation color | custom target highlight color; `ann-no-mark` removes it |
 | `--ann-font` | `'Shantell Sans', cursive` | label font |
 | `--ann-target-gap` | `5px` | gap between target and arrow |
 | `--ann-label-gap` | `6px` | gap between arrow and label |
