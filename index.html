@@ -4,8 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
-  try { document.documentElement.dataset.theme = localStorage.getItem('neat-theme') || 'light'; }
-  catch { document.documentElement.dataset.theme = 'light'; }
+  document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 </script>
 <title>neat-annotations — neat hand-drawn CSS annotations</title>
 <meta name="description" content="Neat hand-drawn CSS annotations: arrows and handwritten labels. Pure CSS, no JavaScript.">
@@ -58,12 +57,16 @@
     letter-spacing: -.01em;
   }
   h2 {
-    margin: 150px 0 0;
+    margin: 200px 0 0;
     font-size: 16px;
     font-weight: 600;
     letter-spacing: -.005em;
   }
   .page-intro { margin: 0; color: var(--ink-2); }
+  .hero-actions { display: flex; justify-content: center; gap: 36px; margin-top: 28px; }
+  .hero-action { display: inline-flex; align-items: center; margin: -10px -6px; padding: 10px 6px; color: var(--ink-2); font-size: 15px; font-weight: 500; line-height: 1; text-decoration: underline; text-underline-offset: 4px; }
+  .hero-action:hover { color: var(--ink); }
+  .hero-action:focus-visible { outline: 2px solid color-mix(in srgb, var(--link) 35%, transparent); outline-offset: 2px; }
   .mdtask-note,
   .palette-note { margin-top: 8px; color: var(--ink-2); }
   a { color: var(--link); text-decoration: none; }
@@ -166,10 +169,8 @@
   .stack-demo { margin-top: 16px; padding: 0 180px; }
   .long-note-demo { margin-top: 16px; padding: 0 0 92px; }
 
-  .usage { margin-top: 96px; padding: 24px 24px 28px; background: var(--surface-soft); box-shadow: 0 0 0 100vmax var(--surface-soft); clip-path: inset(0 -100vmax); }
+  .usage { margin-top: 200px; }
   .usage h2 { margin-top: 0; }
-  .usage .code-snippet,
-  .usage p code { background: var(--surface); }
   .usage-step { margin-top: 16px; }
   .usage-step + .usage-step { margin-top: 28px; }
   .usage-label { color: var(--ink-2); font-size: 14px; font-weight: 600; }
@@ -245,7 +246,7 @@
     .page-intro-rest { display: block; margin-top: 42px; }
     h2 { margin-top: 80px; }
     .wild { padding: 80px 0; }
-    .usage { margin-top: 80px; padding: 24px 12px 28px; }
+    .usage { margin-top: 80px; }
     .mark-demo { gap: 32px; }
     .mdtask-demo { font-size: 13px; }
     .compass-copy { align-items: flex-start; padding: 10px 6px; font-size: 11px; line-height: 1.3; }
@@ -264,6 +265,10 @@
   <header class="hero">
     <h1>neat-annotations</h1>
     <p class="page-intro">Neat hand-drawn annotations<span class="page-intro-rest"> for your page: arrows and <span class="ann ann-nw ann-amber" data-note="like this">handwritten labels</span>.<br>Pure CSS, no JavaScript, one small file.</span></p>
+    <nav class="hero-actions" aria-label="Project links">
+      <a class="hero-action" href="#installation">Install</a>
+      <a class="hero-action" href="https://github.com/syabro/neat-annotations">GitHub</a>
+    </nav>
     <a class="hero-scroll" href="#in-the-wild">Scroll down for more info</a>
   </header>
 
@@ -283,8 +288,8 @@
   <p class="mdtask-source">Example from <a href="https://mdtask.dev">mdtask.dev</a>.</p>
   </section>
 
-  <section class="usage">
-  <h2>Use it</h2>
+  <section class="usage" id="installation">
+  <h2>Installation</h2>
   <div class="usage-step">
     <p class="usage-label">1. Get the CSS</p>
     <div class="code-snippet code-snippet-long">
@@ -422,7 +427,6 @@
   syncThemeToggle();
   themeToggle.addEventListener('click', () => {
     root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    try { localStorage.setItem('neat-theme', root.dataset.theme); } catch {}
     syncThemeToggle();
   });
 
