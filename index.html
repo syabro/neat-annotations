@@ -146,6 +146,7 @@
   .palette.palette-custom { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .mark-demo { margin-top: 16px; padding: 50px 0 58px; }
   .mark-demo-badge { display: inline-block; padding: 7px 11px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface-soft); font-size: 14px; font-weight: 600; line-height: 1; }
+  .stack-demo { margin-top: 16px; padding: 54px 0 62px; }
 
   .usage-step { margin-top: 16px; }
   .usage-step + .usage-step { margin-top: 28px; }
@@ -277,6 +278,19 @@
   <p class="palette-note">Keep, replace, or remove the target highlight with <code>--ann-mark</code>.</p>
   <div class="mark-demo">
     <span class="ann ann-n ann-purple" data-note="keeps its own fill" style="--ann-mark: transparent"><span class="mark-demo-badge">stable</span></span>
+  </div>
+
+  <h2>Stack annotations</h2>
+  <p class="palette-note">Nest two annotations to point at one target from different sides.</p>
+  <div class="stack-demo">
+    <span class="ann ann-n ann-amber" data-note="assigned to Alice" style="--ann-mark: transparent"><span class="ann ann-s ann-red" data-note="P2 bug">login flow</span></span>
+  </div>
+  <div class="code-snippet code-snippet-long">
+    <pre><code class="language-html">&lt;span class="ann ann-n ann-amber" data-note="assigned to Alice" style="--ann-mark: transparent"&gt;&lt;span class="ann ann-s ann-red" data-note="P2 bug"&gt;login flow&lt;/span&gt;&lt;/span&gt;</code></pre>
+    <button class="code-snippet-copy" type="button" aria-label="Copy stacked annotation markup" title="Copy">
+      <svg class="code-snippet-copy-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h11v11H8z"></path><path d="M16 8V5H5v11h3"></path></svg>
+      <svg class="code-snippet-check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12 4 4 8-8"></path></svg>
+    </button>
   </div>
 
   <h2>Use it</h2>
