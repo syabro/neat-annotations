@@ -8,6 +8,7 @@
   --ann-target-gap: 5px;
   --ann-label-gap: 6px;
   --ann-lower-label-gap: -4px;
+  --ann-label-max-width: 150px;
   --ann-arrow-x: 0px;
   --ann-text-x: 0px;
   --ann-arrow-y: 0px;
@@ -30,7 +31,7 @@
   position: absolute;
   z-index: 4;
   width: max-content;
-  max-width: 150px;
+  max-width: var(--ann-label-max-width);
   transform: rotate(var(--ann-rotate));
   font-family: var(--ann-font);
   font-size: 0.95rem;

@@ -51,6 +51,7 @@ Set any CSS color directly on the annotation:
 | `--ann-target-gap` | `5px` | gap between target and arrow |
 | `--ann-label-gap` | `6px` | gap between arrow and label |
 | `--ann-lower-label-gap` | `-4px` | adjustment for labels below the target |
+| `--ann-label-max-width` | `150px` | maximum label width before text wraps |
 | `--ann-arrow-x` / `--ann-arrow-y` | `0px` | nudge the arrow |
 | `--ann-text-x` / `--ann-text-y` | `0px` / `5px` | nudge the label |
 | `--ann-rotate` | `-4deg` | label tilt |
