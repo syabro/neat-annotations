@@ -32,9 +32,15 @@ Combine three things: the base class, a direction, and (optionally) a color. The
 
 `ann-n` `ann-ne` `ann-e` `ann-se` `ann-s` `ann-sw` `ann-w` `ann-nw`
 
-**Colors** — default is a warm gray:
+**Colors** — default is a warm gray; `ann-rainbow` cycles through hues and respects reduced-motion preferences:
 
-`ann-amber` `ann-blue` `ann-green` `ann-red` `ann-purple`
+`ann-amber` `ann-blue` `ann-green` `ann-red` `ann-purple` `ann-rainbow`
+
+Set any CSS color directly on the annotation:
+
+```html
+<span class="ann ann-n" data-note="#ff1493" style="--ann-color: #ff1493">hot pink</span>
+```
 
 **CSS variables** — set them on the element for fine-tuning:
 

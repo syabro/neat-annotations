@@ -61,6 +61,12 @@
 .ann-green { --ann-color: #2f8f5b; }
 .ann-red { --ann-color: #c45a38; }
 .ann-purple { --ann-color: #8657c8; }
+.ann-rainbow { --ann-color: #ff1493; }
+
+@keyframes ann-rainbow-cycle { to { filter: hue-rotate(360deg); } }
+@media (prefers-reduced-motion: no-preference) {
+  .ann-rainbow { animation: ann-rainbow-cycle 3s linear infinite; }
+}
 
 .ann-n::before {
   left: calc(50% - 23px + var(--ann-arrow-x));

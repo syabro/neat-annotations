@@ -8,16 +8,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.3/styles/grayscale.min.css">
 <link rel="stylesheet" href="neat-annotations.css">
 <style>
   :root {
     --ink: #1d1d1f;
     --ink-2: #6e6e73;
     --surface: #fff;
-    --code-bg: #f5f5f7;
     --rule: #d2d2d7;
-    --shadow-edge: inset 0 0 0 1px rgba(255, 255, 255, .96), 0 0 0 1px rgba(0, 0, 0, .04);
-    --panel-shadow: var(--shadow-edge), 0 1px 3px rgba(0, 0, 0, .06), 0 1px 2px -1px rgba(0, 0, 0, .06);
   }
   * { box-sizing: border-box; }
   body {
@@ -41,19 +39,20 @@
     font-weight: 600;
     letter-spacing: -.005em;
   }
-  .tagline { margin: 0 0 96px; color: var(--ink-2); }
-  .muted { margin-top: 8px; color: var(--ink-2); }
+  .page-intro { margin: 0 0 96px; color: var(--ink-2); }
+  .mdtask-note,
+  .palette-note { margin-top: 8px; color: var(--ink-2); }
   a { color: #06c; text-decoration: none; }
   a:hover { text-decoration: underline; }
-  code { padding: .05em .35em; border-radius: 4px; background: var(--code-bg); font: 500 .9rem "SF Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-  .demo, .grid, .colors, .code-copy { box-shadow: var(--panel-shadow); }
-  .grid, .colors, .code-copy { background: var(--surface); }
+  code { font: 500 .9rem "SF Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  p code { padding: 1px 4px; background: #fafafa; }
+  .compass, .palette { background: var(--surface); }
 
-  .demo {
+  .mdtask-demo {
     width: fit-content;
     max-width: 100%;
     margin: 16px auto 0;
-    padding: 88px 32px;
+    padding: 55px 32px;
     overflow-x: auto;
     border-radius: 12px;
     background: transparent;
@@ -61,197 +60,221 @@
     text-align: left;
     font: 500 14px/1.7 "SF Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
-  .demo .line { white-space: pre; }
-  .caption { margin-top: 8px; color: var(--ink-2); font-size: 13px; text-align: center; }
+  .mdtask-demo .mdtask-row { white-space: pre; }
+  .mdtask-source { margin-top: 8px; color: var(--ink-2); font-size: 13px; text-align: center; }
 
-  .grid {
+  .compass {
     display: grid;
     grid-template-areas:
       "nw n ne"
       "w copy e"
       "sw s se";
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    margin-top: 16px;
+    width: 100%;
+    max-width: 800px;
+    margin: -20px auto 0;
     border-radius: 12px;
   }
-  .cell {
+  .compass-slot {
     display: flex;
     align-items: center;
     justify-content: center;
     min-width: 0;
-    height: 160px;
+    height: 100px;
   }
-  .grid-nw { grid-area: nw; }
-  .grid-n { grid-area: n; }
-  .grid-ne { grid-area: ne; }
-  .grid-w { grid-area: w; }
-  .grid-copy { grid-area: copy; padding: 24px; color: var(--ink-2); font-size: 14px; line-height: 1.45; text-align: center; }
-  .grid-e { grid-area: e; }
-  .grid-sw { grid-area: sw; }
-  .grid-s { grid-area: s; }
-  .grid-se { grid-area: se; }
+  .compass-nw { grid-area: nw; }
+  .compass-n { grid-area: n; }
+  .compass-ne { grid-area: ne; }
+  .compass-w { grid-area: w; }
+  .compass-copy { grid-area: copy; padding: 24px; color: var(--ink-2); font-size: 14px; line-height: 1.45; text-align: center; }
+  .compass-e { grid-area: e; }
+  .compass-sw { grid-area: sw; }
+  .compass-s { grid-area: s; }
+  .compass-se { grid-area: se; }
 
-  .colors {
+  .palette {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
     align-items: start;
     justify-items: center;
     gap: 0;
     margin-top: 16px;
-    padding: 52px 32px 100px;
+    padding: 0 32px 46px;
     border-radius: 12px;
   }
+  @media (min-width: 801px) {
+    .palette.palette-built-in { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  }
+  .palette.palette-custom { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
-  .use-step { margin-top: 16px; }
-  .use-step + .use-step { margin-top: 28px; }
-  .use-label { color: var(--ink-2); font-size: 14px; font-weight: 600; }
-  .code-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; gap: 8px; margin-top: 8px; }
-  .code-copy { min-width: 0; border-radius: 12px; text-align: left; }
-  .code-copy pre { margin: 0; padding: 16px; overflow-x: auto; scrollbar-width: none; }
-  .code-copy pre::-webkit-scrollbar { display: none; }
-  .code-copy code { padding: 0; background: transparent; font-size: 13px; line-height: 1.6; white-space: pre; }
-  .copy-button {
-    display: block;
-    min-width: 76px;
-    margin: 0;
-    padding: 8px 14px;
-    border: 1px solid rgba(0, 0, 0, .12);
-    border-radius: 8px;
-    background: var(--surface);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
-    color: var(--ink);
-    font: 600 13px/1.4 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  .usage-step { margin-top: 16px; }
+  .usage-step + .usage-step { margin-top: 28px; }
+  .usage-label { color: var(--ink-2); font-size: 14px; font-weight: 600; }
+  .code-snippet {
+    display: grid;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    min-width: 0;
+    max-width: 100%;
+    margin: 8px auto 0;
+    background: #fafafa;
+  }
+  .code-snippet:has(.code-snippet-copy) { grid-template-columns: minmax(0, 1fr) 28px; }
+  .code-snippet pre { min-width: 0; margin: 0; padding: 8px 12px; }
+  .code-snippet:has(.code-snippet-copy) pre { padding-right: 0; }
+  .code-snippet code.hljs { display: block; overflow: visible; padding: 0; background: transparent; color: var(--ink); font-size: 13px; line-height: 1.6; text-align: center; white-space: nowrap; }
+  .code-snippet [class^="hljs-"],
+  .code-snippet [class*=" hljs-"] { background-image: none; }
+  .code-snippet:has(.code-snippet-copy) code.hljs { overflow: hidden; text-overflow: ellipsis; }
+  .code-snippet-long code.hljs { text-align: left; }
+  .code-snippet-copy {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink-2);
     cursor: pointer;
   }
-  .copy-button:hover { background: var(--code-bg); }
-  .copy-button:focus-visible { outline: 2px solid rgba(0, 102, 204, .35); outline-offset: 2px; }
-  .syntax-punctuation { color: #6e7781; }
-  .syntax-tag { color: #116329; }
-  .syntax-attr { color: #953800; }
-  .syntax-string { color: #0a3069; }
-  .use-note { margin-top: 8px; color: var(--ink-2); font-size: 14px; }
+  .code-snippet-copy:hover { color: var(--ink); }
+  .code-snippet-copy:focus-visible { outline: 2px solid rgba(0, 102, 204, .35); outline-offset: 2px; }
+  .code-snippet-copy svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .code-snippet-copy .code-snippet-check-icon { display: none; }
+  .code-snippet-copy.is-copied .code-snippet-copy-icon { display: none; }
+  .code-snippet-copy.is-copied .code-snippet-check-icon { display: block; }
+  .usage-note { margin-top: 8px; color: var(--ink-2); font-size: 14px; }
   footer { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--rule); color: var(--ink-2); }
 
   @media (max-width: 800px) {
-    .colors { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 76px; }
+    .palette { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 76px; }
   }
   @media (max-width: 560px) {
     main { width: calc(100% - 40px); padding: 36px 0 100px; }
-    .tagline { margin-bottom: 80px; }
-    .tagline-rest { display: block; margin-top: 42px; }
+    .page-intro { margin-bottom: 80px; }
+    .page-intro-rest { display: block; margin-top: 42px; }
     h2 { margin-top: 80px; }
-    .demo { padding: 76px 20px; font-size: 13px; }
-    .cell { height: 140px; }
-    .grid-copy { align-items: flex-start; padding: 10px 6px; font-size: 11px; line-height: 1.3; }
-    .grid .ann-w { transform: translateX(-25px); }
-    .grid .ann-e { transform: translateX(25px); }
-    .colors { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-right: 20px; padding-left: 20px; }
+    .mdtask-demo { font-size: 13px; }
+    .compass-copy { align-items: flex-start; padding: 10px 6px; font-size: 11px; line-height: 1.3; }
+    .compass .ann-w { transform: translateX(-25px); }
+    .compass .ann-e { transform: translateX(25px); }
+    .palette { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-right: 20px; padding-left: 20px; }
   }
 </style>
 </head>
 <body>
 <main>
   <h1>neat-annotations</h1>
-  <p class="tagline">Neat hand-drawn annotations<span class="tagline-rest"> for your page: arrows and <span class="ann ann-nw ann-amber" data-note="like this">handwritten labels</span>.<br>Pure CSS, no JavaScript, one small file.</span></p>
+  <p class="page-intro">Neat hand-drawn annotations<span class="page-intro-rest"> for your page: arrows and <span class="ann ann-nw ann-amber" data-note="like this">handwritten labels</span>.<br>Pure CSS, no JavaScript, one small file.</span></p>
 
   <h2>In the wild</h2>
-  <p class="muted">Wrap any inline element — the arrow and the note are drawn around it.</p>
-  <div class="demo">
-    <div class="line">- <span class="ann ann-n ann-amber" data-note="open task">[ ]</span> <span class="ann ann-s ann-blue" data-note="stable ID">CLI-042</span> Add export command    <span class="ann ann-se ann-green" data-note="tag">#cli</span> <span class="ann ann-sw ann-red" data-note="priority">!high</span> <span class="ann ann-nw ann-purple" data-note="custom field">@blocked_by:CLI-041</span></div>
-    <div class="line">      <span class="ann ann-n" data-note="description">Write task output as JSON for scripts and agents</span></div>
+  <p class="mdtask-note">Wrap any inline element — the arrow and the note are drawn around it.</p>
+  <div class="mdtask-demo">
+    <div class="mdtask-row">- <span class="ann ann-n ann-amber" data-note="open task">[ ]</span> <span class="ann ann-s ann-blue" data-note="stable ID">CLI-042</span> Add export command    <span class="ann ann-se ann-green" data-note="tag">#cli</span> <span class="ann ann-sw ann-red" data-note="priority">!high</span> <span class="ann ann-nw ann-purple" data-note="custom field">@blocked_by:CLI-041</span></div>
+    <div class="mdtask-row">      <span class="ann ann-n" data-note="description">Write task output as JSON for scripts and agents</span></div>
   </div>
-  <p class="caption">Originally used on the mdtask.dev landing page.</p>
+  <p class="mdtask-source">Originally used on the <a href="https://mdtask.dev">mdtask.dev</a> landing page.</p>
 
   <h2>Directions</h2>
-  <div class="grid">
-    <div class="cell grid-nw"><span class="ann ann-nw" data-note=".ann-nw">target</span></div>
-    <div class="cell grid-n"><span class="ann ann-n" data-note=".ann-n">target</span></div>
-    <div class="cell grid-ne"><span class="ann ann-ne" data-note=".ann-ne">target</span></div>
-    <div class="cell grid-w"><span class="ann ann-w" data-note=".ann-w">target</span></div>
-    <div class="cell grid-copy">Follow compass directions for arrows.</div>
-    <div class="cell grid-e"><span class="ann ann-e" data-note=".ann-e">target</span></div>
-    <div class="cell grid-sw"><span class="ann ann-sw" data-note=".ann-sw">target</span></div>
-    <div class="cell grid-s"><span class="ann ann-s" data-note=".ann-s">target</span></div>
-    <div class="cell grid-se"><span class="ann ann-se" data-note=".ann-se">target</span></div>
+  <div class="compass">
+    <div class="compass-slot compass-nw"><span class="ann ann-nw" data-note=".ann-nw">target</span></div>
+    <div class="compass-slot compass-n"><span class="ann ann-n" data-note=".ann-n">target</span></div>
+    <div class="compass-slot compass-ne"><span class="ann ann-ne" data-note=".ann-ne">target</span></div>
+    <div class="compass-slot compass-w"><span class="ann ann-w" data-note=".ann-w">target</span></div>
+    <div class="compass-slot compass-copy">Follow compass directions for arrows.</div>
+    <div class="compass-slot compass-e"><span class="ann ann-e" data-note=".ann-e">target</span></div>
+    <div class="compass-slot compass-sw"><span class="ann ann-sw" data-note=".ann-sw">target</span></div>
+    <div class="compass-slot compass-s"><span class="ann ann-s" data-note=".ann-s">target</span></div>
+    <div class="compass-slot compass-se"><span class="ann ann-se" data-note=".ann-se">target</span></div>
   </div>
 
   <h2>Colors</h2>
-  <p class="muted">Five built-in colors plus a warm-gray default. Set <code>--ann-color</code> for your own.</p>
-  <div class="colors">
+  <p class="palette-note">Five colors and an animated rainbow, plus a warm-gray default.</p>
+  <div class="palette palette-built-in">
     <span class="ann ann-n" data-note="default">plain</span>
     <span class="ann ann-n ann-amber" data-note="ann-amber">amber</span>
     <span class="ann ann-n ann-blue" data-note="ann-blue">blue</span>
     <span class="ann ann-n ann-green" data-note="ann-green">green</span>
     <span class="ann ann-n ann-red" data-note="ann-red">red</span>
     <span class="ann ann-n ann-purple" data-note="ann-purple">purple</span>
+    <span class="ann ann-n ann-rainbow" data-note="ann-rainbow">rainbow</span>
+  </div>
+  <h2>Custom colors</h2>
+  <p class="palette-note">Set any CSS color directly with <code>--ann-color</code>.</p>
+  <div class="palette palette-custom">
+    <span class="ann ann-n" data-note="#111111" style="--ann-color: #111111">black</span>
+    <span class="ann ann-n" data-note="#ff1493" style="--ann-color: #ff1493">hot pink</span>
+    <span class="ann ann-n" data-note="#00c2d7" style="--ann-color: #00c2d7">cyan</span>
+  </div>
+  <div class="code-snippet">
+    <pre><code class="language-html">&lt;span class="ann ann-n" data-note="#00c2d7" style="<span class="ann ann-n" data-note="any CSS color" style="--ann-color: #00c2d7">--ann-color: #00c2d7</span>"&gt;cyan&lt;/span&gt;</code></pre>
   </div>
 
   <h2>Use it</h2>
-  <div class="use-step">
-    <p class="use-label">1. Get the CSS</p>
-    <div class="code-line">
-      <div class="code-copy">
-        <pre><code><span class="syntax-punctuation">&lt;</span><span class="syntax-tag">link</span> <span class="syntax-attr">rel</span><span class="syntax-punctuation">=</span><span class="syntax-string">"stylesheet"</span> <span class="syntax-attr">href</span><span class="syntax-punctuation">=</span><span class="syntax-string">"https://cdn.jsdelivr.net/gh/syabro/neat-annotations/neat-annotations.css"</span><span class="syntax-punctuation">&gt;</span></code></pre>
-      </div>
-      <button class="copy-button" type="button" aria-label="Copy CSS link" aria-live="polite">Copy</button>
+  <div class="usage-step">
+    <p class="usage-label">1. Get the CSS</p>
+    <div class="code-snippet code-snippet-long">
+      <pre><code class="language-html">&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/syabro/neat-annotations/neat-annotations.css"&gt;</code></pre>
+      <button class="code-snippet-copy" type="button" aria-label="Copy CSS link" title="Copy">
+        <svg class="code-snippet-copy-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h11v11H8z"></path><path d="M16 8V5H5v11h3"></path></svg>
+        <svg class="code-snippet-check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12 4 4 8-8"></path></svg>
+      </button>
     </div>
-    <p class="use-note">Or download <a href="https://cdn.jsdelivr.net/gh/syabro/neat-annotations/neat-annotations.css">neat-annotations.css</a> and link it locally.</p>
+    <p class="usage-note">Or download <a href="https://cdn.jsdelivr.net/gh/syabro/neat-annotations/neat-annotations.css">neat-annotations.css</a> and link it locally.</p>
   </div>
-  <div class="use-step">
-    <p class="use-label">2. Optional: handwritten font</p>
-    <div class="code-line">
-      <div class="code-copy">
-        <pre><code><span class="syntax-punctuation">&lt;</span><span class="syntax-tag">link</span> <span class="syntax-attr">href</span><span class="syntax-punctuation">=</span><span class="syntax-string">"https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400;500;600&amp;display=swap"</span> <span class="syntax-attr">rel</span><span class="syntax-punctuation">=</span><span class="syntax-string">"stylesheet"</span><span class="syntax-punctuation">&gt;</span></code></pre>
-      </div>
-      <button class="copy-button" type="button" aria-label="Copy optional font link" aria-live="polite">Copy</button>
+  <div class="usage-step">
+    <p class="usage-label">2. Optional: handwritten font</p>
+    <div class="code-snippet code-snippet-long">
+      <pre><code class="language-html">&lt;link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"&gt;</code></pre>
+      <button class="code-snippet-copy" type="button" aria-label="Copy optional font link" title="Copy">
+        <svg class="code-snippet-copy-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h11v11H8z"></path><path d="M16 8V5H5v11h3"></path></svg>
+        <svg class="code-snippet-check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12 4 4 8-8"></path></svg>
+      </button>
     </div>
-    <p class="use-note">Skip this and labels fall back to <code>cursive</code>.</p>
+    <p class="usage-note">Skip this and labels fall back to <code>cursive</code>.</p>
   </div>
-  <div class="use-step">
-    <p class="use-label">3. Write an annotation</p>
-    <div class="code-line">
-      <div class="code-copy">
-        <pre><code><span class="syntax-punctuation">&lt;</span><span class="syntax-tag">span</span> <span class="syntax-attr">class</span><span class="syntax-punctuation">=</span><span class="syntax-string">"ann ann-n ann-amber"</span> <span class="syntax-attr">data-note</span><span class="syntax-punctuation">=</span><span class="syntax-string">"open task"</span><span class="syntax-punctuation">&gt;</span>[ ]<span class="syntax-punctuation">&lt;/</span><span class="syntax-tag">span</span><span class="syntax-punctuation">&gt;</span></code></pre>
-      </div>
-      <button class="copy-button" type="button" aria-label="Copy annotation markup" aria-live="polite">Copy</button>
+  <div class="usage-step">
+    <p class="usage-label">3. Write an annotation</p>
+    <div class="code-snippet">
+      <pre><code class="language-html">&lt;span class="ann ann-n ann-amber" data-note="open task"&gt;[ ]&lt;/span&gt;</code></pre>
+      <button class="code-snippet-copy" type="button" aria-label="Copy annotation markup" title="Copy">
+        <svg class="code-snippet-copy-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h11v11H8z"></path><path d="M16 8V5H5v11h3"></path></svg>
+        <svg class="code-snippet-check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12 4 4 8-8"></path></svg>
+      </button>
     </div>
   </div>
 
   <footer>MIT · <a href="https://github.com/syabro/neat-annotations">GitHub</a></footer>
 </main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.3/highlight.min.js"></script>
 <script>
-  async function copyText(text) {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-      return;
-    }
-    const field = document.createElement('textarea');
-    field.value = text;
-    field.setAttribute('readonly', '');
-    field.style.position = 'fixed';
-    field.style.opacity = '0';
-    document.body.appendChild(field);
-    field.select();
-    const copied = document.execCommand('copy');
-    field.remove();
-    if (!copied) throw new Error('Copy failed');
-  }
+  document.querySelectorAll('pre code').forEach((block) => hljs.highlightElement(block));
 
-  document.querySelectorAll('.copy-button').forEach((button) => {
+  document.querySelectorAll('.code-snippet-copy').forEach((button) => {
     button.addEventListener('click', async () => {
-      const code = button.closest('.code-line').querySelector('code');
+      const code = button.closest('.code-snippet').querySelector('code');
+      const idleLabel = button.getAttribute('aria-label');
       try {
-        await copyText(code.textContent);
-        button.textContent = 'Copied';
+        await navigator.clipboard.writeText(code.textContent);
+        button.classList.add('is-copied');
+        button.setAttribute('aria-label', 'Copied');
+        button.title = 'Copied';
       } catch {
         const range = document.createRange();
         range.selectNodeContents(code);
         const selection = window.getSelection();
         selection.removeAllRanges();
         selection.addRange(range);
-        button.textContent = 'Selected';
+        button.setAttribute('aria-label', 'Code selected');
+        button.title = 'Code selected';
       }
-      window.setTimeout(() => { button.textContent = 'Copy'; }, 1500);
+      window.setTimeout(() => {
+        button.classList.remove('is-copied');
+        button.setAttribute('aria-label', idleLabel);
+        button.title = 'Copy';
+      }, 1500);
     });
   });
 </script>
