@@ -59,7 +59,7 @@ Set any CSS color directly on the annotation:
 | Variable | Default | What it does |
 | --- | --- | --- |
 | `--ann-color` | warm gray | arrow and label color |
-| `--ann-mark` | 10% annotation color | custom target highlight color; `ann-no-mark` removes it |
+| `--ann-mark` | 10% in light mode, 24% with stronger chroma in dark mode | custom target highlight color; `ann-no-mark` removes it |
 | `--ann-font` | `'Shantell Sans', cursive` | label font |
 | `--ann-target-gap` | `5px` | gap between target and arrow |
 | `--ann-label-gap` | `6px` | gap between arrow and label |
