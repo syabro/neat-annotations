@@ -4,6 +4,7 @@
 
 .ann {
   --ann-color: oklch(0.62 0.005 30);
+  --ann-mark: color-mix(in oklch, var(--ann-color) 10%, transparent);
   --ann-font: 'Shantell Sans', cursive;
   --ann-target-gap: 5px;
   --ann-label-gap: 6px;
@@ -19,11 +20,11 @@
   overflow: visible;
   line-height: 1.15;
   border-radius: 3px;
-  background: color-mix(in oklch, var(--ann-color) 10%, transparent);
+  background: var(--ann-mark);
   box-shadow:
-    -0.3em 0 0 0 color-mix(in oklch, var(--ann-color) 10%, transparent),
-    0.3em 0 0 0 color-mix(in oklch, var(--ann-color) 10%, transparent),
-    0 0 0 1px color-mix(in oklch, var(--ann-color) 10%, transparent);
+    -0.3em 0 0 0 var(--ann-mark),
+    0.3em 0 0 0 var(--ann-mark),
+    0 0 0 1px var(--ann-mark);
 }
 
 .ann::after {

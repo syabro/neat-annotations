@@ -144,6 +144,8 @@
     .palette.palette-built-in { grid-template-columns: repeat(7, minmax(0, 1fr)); }
   }
   .palette.palette-custom { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mark-demo { margin-top: 16px; padding: 50px 0 58px; }
+  .mark-demo-badge { display: inline-block; padding: 7px 11px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface-soft); font-size: 14px; font-weight: 600; line-height: 1; }
 
   .usage-step { margin-top: 16px; }
   .usage-step + .usage-step { margin-top: 28px; }
@@ -269,6 +271,12 @@
   </div>
   <div class="code-snippet">
     <pre><code class="language-html">&lt;span class="ann ann-n" data-note="#00c2d7" style="<span class="ann ann-n" data-note="any CSS color" style="--ann-color: #00c2d7">--ann-color: #00c2d7</span>"&gt;cyan&lt;/span&gt;</code></pre>
+  </div>
+
+  <h2>Target highlight</h2>
+  <p class="palette-note">Keep, replace, or remove the target highlight with <code>--ann-mark</code>.</p>
+  <div class="mark-demo">
+    <span class="ann ann-n ann-purple" data-note="keeps its own fill" style="--ann-mark: transparent"><span class="mark-demo-badge">stable</span></span>
   </div>
 
   <h2>Use it</h2>
