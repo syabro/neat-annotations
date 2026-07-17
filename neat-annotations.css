@@ -23,8 +23,7 @@
   background: var(--ann-mark);
   box-shadow:
     -0.3em 0 0 0 var(--ann-mark),
-    0.3em 0 0 0 var(--ann-mark),
-    0 0 0 1px var(--ann-mark);
+    0.3em 0 0 0 var(--ann-mark);
 }
 
 .ann::after {
