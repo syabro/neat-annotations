@@ -4,83 +4,113 @@
 
 # neat-annotations
 
-Neat hand-drawn CSS annotations: arrows and handwritten labels pointing at things on your page. Pure CSS, no JavaScript, no build step — one self-contained file.
+Hand-drawn arrows and handwritten labels for your website. Pure CSS, no JavaScript, no build step — one self-contained file.
 
-**[Demo →](https://syabro.github.io/neat-annotations/)**
+[Demo](https://neat-annotations.syabro.com/) · [CSS file](neat-annotations.css) · [GitHub](https://github.com/syabro/neat-annotations)
 
-## Use
+## Quick start
 
-Copy [`neat-annotations.css`](neat-annotations.css) into your project, or hotlink it:
+Add the stylesheet from jsDelivr, or download [`neat-annotations.css`](neat-annotations.css) and serve it locally:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/syabro/neat-annotations/neat-annotations.css">
 ```
 
-Labels look best with [Shantell Sans](https://fonts.google.com/specimen/Shantell+Sans) (optional — falls back to system `cursive`):
+Wrap the element you want to annotate:
+
+```html
+The dashboard updates <span class="ann ann-n ann-amber" data-note="no refresh needed">in real time</span>
+```
+
+Shantell Sans is optional. Load it to match the demo; otherwise labels fall back to a cursive font:
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 ```
 
-Then wrap any inline element:
+**Layout note:** annotations are positioned outside their target and do not reserve space. Leave enough margin around annotated lines for the arrow and label.
 
-```html
-<span class="ann ann-n ann-amber" data-note="open task">[ ]</span>
-```
+<p align="center">
+  <img src="assets/readme-basic.png" alt="A simple annotation pointing to highlighted text" width="1000">
+</p>
 
 ## API
 
-Start with the base class, then add a direction and color when needed. The note text comes from `data-note`; without it, the element keeps only its color highlight.
+Start with `ann`, then add a direction and color when needed. The label comes from `data-note`.
 
-**Directions** — where the arrow points (`ann-n` points north, so the annotation sits below its target):
+### Directions
 
-`ann-n` `ann-ne` `ann-e` `ann-se` `ann-s` `ann-sw` `ann-w` `ann-nw`
+A direction class names where the arrow points. For example, `ann-n` places the label below the target and points the arrow north toward it.
 
-**Colors** — default is a warm gray; `ann-rainbow` cycles through hues and respects reduced-motion preferences:
+<p align="center">
+  <img src="assets/readme-directions.png" alt="The eight annotation arrow directions" width="1000">
+</p>
 
-`ann-amber` `ann-blue` `ann-green` `ann-red` `ann-purple` `ann-rainbow`
+`ann-n` · `ann-ne` · `ann-e` · `ann-se` · `ann-s` · `ann-sw` · `ann-w` · `ann-nw`
 
-Set any CSS color directly on the annotation:
+```html
+<span class="ann ann-n" data-note="points north">target</span>
+```
+
+### Colors
+
+The default is warm gray. Six built-in classes change the arrow, label, and target highlight together:
+
+<p align="center">
+  <img src="assets/readme-colors.png" alt="Built-in annotation colors" width="1000">
+</p>
+
+`ann-amber` · `ann-blue` · `ann-green` · `ann-red` · `ann-purple` · `ann-rainbow`
+
+`ann-rainbow` animates through hues and respects `prefers-reduced-motion`.
+
+### Custom colors
+
+Set any CSS color directly with `--ann-color`:
 
 ```html
 <span class="ann ann-n" data-note="..." style="--ann-color: #ff1493">hot pink</span>
 ```
 
-**Highlight only** — use an annotation as a text marker by omitting `data-note` and the direction class:
+### Highlight only
+
+Omit `data-note` and the direction class to use an annotation as a text marker without an arrow or label:
 
 ```html
 <span class="ann ann-amber">important</span>
 ```
 
-**Target highlight** — add `ann-no-mark` when the target already has its own fill:
+### Target highlight
+
+Add `ann-no-mark` when the target already has its own fill:
 
 ```html
 <span class="ann ann-n ann-purple ann-no-mark" data-note="keeps its own fill"><span class="badge">stable</span></span>
 ```
 
-**CSS variables** — set them on the element for fine-tuning:
+Annotations can be nested to point at one target from different sides. Long notes wrap according to `--ann-label-max-width`. See the [demo](https://neat-annotations.syabro.com/) for both patterns.
 
-| Variable | Default | What it does |
+## Fine-tuning
+
+Set these variables directly on an annotated element:
+
+| Variable | Default | What it controls |
 | --- | --- | --- |
 | `--ann-color` | warm gray | arrow and label color |
-| `--ann-mark` | 10% in light mode, 24% with stronger chroma in dark mode | custom target highlight color; `ann-no-mark` removes it |
+| `--ann-mark` | theme-aware tint | target highlight; `ann-no-mark` removes it |
 | `--ann-font` | `'Shantell Sans', cursive` | label font |
 | `--ann-target-gap` | `5px` | gap between target and arrow |
 | `--ann-label-gap` | `6px` | gap between arrow and label |
 | `--ann-lower-label-gap` | `-4px` | adjustment for labels below the target |
-| `--ann-label-max-width` | `150px` | maximum label width before text wraps |
-| `--ann-arrow-x` / `--ann-arrow-y` | `0px` | nudge the arrow |
-| `--ann-text-x` / `--ann-text-y` | `0px` / `5px` | nudge the label |
+| `--ann-label-max-width` | `150px` | maximum label width before wrapping |
+| `--ann-arrow-x` / `--ann-arrow-y` | `0px` | arrow position |
+| `--ann-text-x` / `--ann-text-y` | `0px` / `5px` | label position |
 | `--ann-rotate` | `-4deg` | label tilt |
-
-Annotations are positioned outside the element and don't reserve space — give annotated lines some breathing room (margins).
 
 ## Accessibility
 
-Annotations are visual enhancements. Do not use `data-note` as the only source of instructions, status, validation, or other essential information. When a note matters to understanding or operating the page, repeat it in visible HTML or connect a real description to the target with `aria-describedby`.
-
-The `ann-rainbow` animation respects `prefers-reduced-motion`.
+Annotations are visual enhancements. Do not use `data-note` as the only source of instructions, status, validation, or other essential information. Repeat important content in visible HTML or connect a real description to the target with `aria-describedby`.
 
 ## License
 
-MIT
+[MIT](LICENSE)

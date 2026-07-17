@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>neat-annotations preview sources</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="neat-annotations.css">
+<style>
+  :root { color-scheme: light; --ink: #1d1d1f; --ink-2: #6e6e73; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 48px; background: #ececef; color: var(--ink); font: 16px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  .preview-source { width: fit-content; margin: 0 auto 64px; }
+  .preview-source:last-child { margin-bottom: 0; }
+  .preview-source h2 { margin: 0 0 12px; color: #6e6e73; font-size: 13px; font-weight: 600; }
+  .preview-frame { position: relative; overflow: hidden; background: #fff; }
+
+  #social-preview { display: grid; width: 750px; height: 394px; place-items: center; text-align: center; }
+  .social-preview-copy { transform: translateY(-2px); }
+  .social-preview-copy h1 { margin: 0 0 10px; font-size: 28px; font-weight: 600; letter-spacing: -.01em; }
+  .social-preview-copy p { margin: 0; color: var(--ink-2); }
+
+  #readme-basic { display: grid; width: 1000px; height: 450px; place-items: center; font-size: 24px; }
+  .readme-basic-copy { transform: translateY(-34px); }
+
+  #readme-directions { display: grid; width: 1000px; height: 500px; place-items: center; }
+  .readme-directions-grid { display: grid; grid-template-areas: "nw n ne" "w copy e" "sw s se"; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 860px; }
+  .readme-direction { display: flex; align-items: center; justify-content: center; min-width: 0; height: 100px; }
+  .readme-direction-nw { grid-area: nw; }
+  .readme-direction-n { grid-area: n; }
+  .readme-direction-ne { grid-area: ne; }
+  .readme-direction-w { grid-area: w; }
+  .readme-directions-copy { grid-area: copy; align-self: center; padding: 20px; color: var(--ink-2); font-size: 14px; line-height: 1.45; text-align: center; }
+  .readme-direction-e { grid-area: e; }
+  .readme-direction-sw { grid-area: sw; }
+  .readme-direction-s { grid-area: s; }
+  .readme-direction-se { grid-area: se; }
+
+  #readme-colors { display: grid; width: 1000px; height: 280px; align-content: center; }
+  .readme-colors-copy { margin: 0 0 30px; color: var(--ink-2); text-align: center; }
+  .readme-colors-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); align-items: start; justify-items: center; padding: 0 36px 48px; }
+  #readme-colors .ann-rainbow { animation: none; }
+</style>
+</head>
+<body>
+<article class="preview-source">
+  <h2>social-preview.png · 1500 × 788 at 2×</h2>
+  <section class="preview-frame" id="social-preview">
+    <div class="social-preview-copy">
+      <h1>neat-annotations</h1>
+      <p>Neat hand-drawn annotations for your page: arrows and <span class="ann ann-nw ann-amber" data-note="like this">handwritten labels</span>.<br>Pure CSS, no JavaScript, one small file.</p>
+    </div>
+  </section>
+</article>
+
+<article class="preview-source">
+  <h2>assets/readme-basic.png · 2000 × 900 at 2×</h2>
+  <section class="preview-frame" id="readme-basic">
+    <div class="readme-basic-copy">The dashboard updates <span class="ann ann-n ann-amber" data-note="no refresh needed">in real time</span></div>
+  </section>
+</article>
+
+<article class="preview-source">
+  <h2>assets/readme-directions.png · 2000 × 1000 at 2×</h2>
+  <section class="preview-frame" id="readme-directions">
+    <div class="readme-directions-grid">
+      <div class="readme-direction readme-direction-nw"><span class="ann ann-nw" data-note=".ann-nw">target</span></div>
+      <div class="readme-direction readme-direction-n"><span class="ann ann-n" data-note=".ann-n">target</span></div>
+      <div class="readme-direction readme-direction-ne"><span class="ann ann-ne" data-note=".ann-ne">target</span></div>
+      <div class="readme-direction readme-direction-w"><span class="ann ann-w" data-note=".ann-w">target</span></div>
+      <div class="readme-directions-copy">Follow compass directions for arrows.</div>
+      <div class="readme-direction readme-direction-e"><span class="ann ann-e" data-note=".ann-e">target</span></div>
+      <div class="readme-direction readme-direction-sw"><span class="ann ann-sw" data-note=".ann-sw">target</span></div>
+      <div class="readme-direction readme-direction-s"><span class="ann ann-s" data-note=".ann-s">target</span></div>
+      <div class="readme-direction readme-direction-se"><span class="ann ann-se" data-note=".ann-se">target</span></div>
+    </div>
+  </section>
+</article>
+
+<article class="preview-source">
+  <h2>assets/readme-colors.png · 2000 × 560 at 2×</h2>
+  <section class="preview-frame" id="readme-colors">
+    <p class="readme-colors-copy">Five colors and an animated rainbow, plus a warm-gray default.</p>
+    <div class="readme-colors-grid">
+      <span class="ann ann-n" data-note="default">plain</span>
+      <span class="ann ann-n ann-amber" data-note="ann-amber">amber</span>
+      <span class="ann ann-n ann-blue" data-note="ann-blue">blue</span>
+      <span class="ann ann-n ann-green" data-note="ann-green">green</span>
+      <span class="ann ann-n ann-red" data-note="ann-red">red</span>
+      <span class="ann ann-n ann-purple" data-note="ann-purple">purple</span>
+      <span class="ann ann-n ann-rainbow" data-note="ann-rainbow">rainbow</span>
+    </div>
+  </section>
+</article>
+</body>
+</html>
