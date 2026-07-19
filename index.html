@@ -78,6 +78,7 @@
     letter-spacing: -.005em;
   }
   .page-intro { margin: 0; color: var(--ink-2); }
+  .page-intro-details { display: block; }
   .hero-actions { display: flex; justify-content: center; gap: 36px; margin-top: 28px; }
   .hero-action { display: inline-flex; align-items: center; margin: -10px -6px; padding: 10px 6px; color: var(--ink-2); font-size: 15px; font-weight: 500; line-height: 1; text-decoration: underline; text-underline-offset: 4px; }
   .hero-action:hover { color: var(--ink); }
@@ -172,6 +173,7 @@
     padding: 0 32px 46px;
     border-radius: 12px;
   }
+  .palette-item { display: flex; align-items: flex-start; justify-content: center; min-width: 0; }
   @media (min-width: 801px) {
     .palette.palette-built-in { grid-template-columns: repeat(7, minmax(0, 1fr)); }
   }
@@ -240,8 +242,8 @@
   :root[data-theme="dark"] main .ann-red { --ann-color: #ee8a6e; }
   :root[data-theme="dark"] main .ann-purple { --ann-color: #b998ef; }
   :root[data-theme="dark"] main .ann-rainbow { --ann-color: #ff5aad; }
-  :root[data-theme="dark"] .palette-custom .ann:first-child { --ann-color: #f5f5f7 !important; }
-  :root[data-theme="dark"] .palette-custom .ann:first-child::after { content: "#f5f5f7"; }
+  :root[data-theme="dark"] .palette-custom .palette-item:first-child .ann { --ann-color: #f5f5f7 !important; }
+  :root[data-theme="dark"] .palette-custom .palette-item:first-child .ann::after { content: "#f5f5f7"; }
   :root[data-theme="dark"] .code-snippet [class^="hljs-"],
   :root[data-theme="dark"] .code-snippet [class*=" hljs-"] { color: var(--ink); }
   :root[data-theme="dark"] .code-snippet .hljs-comment,
@@ -258,16 +260,55 @@
     main { width: calc(100% - 40px); padding: 0 0 100px; }
     .theme-toggle { top: 34px; }
     .hero-scroll { bottom: 52px; }
-    .page-intro-rest { display: block; margin-top: 42px; }
+    .page-intro-rest { display: block; }
+    .page-intro-details { margin-top: 50px; }
     h2 { margin-top: 80px; }
     .wild { padding: 80px 0; }
     .usage { margin-top: 80px; }
-    .mark-demo { gap: 32px; }
     .mdtask-demo { font-size: 13px; }
-    .compass-copy { align-items: flex-start; padding: 10px 6px; font-size: 11px; line-height: 1.3; }
-    .compass .ann-w { transform: translateX(-25px); }
-    .compass .ann-e { transform: translateX(25px); }
-    .palette { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-right: 20px; padding-left: 20px; }
+    .compass,
+    .palette {
+      display: flex;
+      justify-content: flex-start;
+      width: calc(100% + 40px);
+      margin-right: -20px;
+      margin-left: -20px;
+      padding-right: 20px;
+      padding-left: 20px;
+      gap: 12px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-padding-inline: 20px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+    .compass::-webkit-scrollbar,
+    .palette::-webkit-scrollbar { display: none; }
+    .compass { margin-top: 16px; padding-top: 10px; padding-bottom: 10px; border-radius: 0; }
+    .compass-slot,
+    .palette-item { flex: 0 0 calc(100% - 72px); border-radius: 12px; background: var(--surface); box-shadow: 0 2px 8px light-dark(rgba(0, 0, 0, .1), rgba(0, 0, 0, .32)); scroll-snap-align: center; scroll-snap-stop: always; }
+    .compass-slot { height: 160px; }
+    .compass .ann { --ann-color: #007aff; }
+    :root[data-theme="dark"] .compass .ann { --ann-color: #5ac8fa; }
+    .compass-copy { display: none; }
+    .compass .ann-w { transform: translateX(-40px); }
+    .compass .ann-e { transform: translateX(40px); }
+    .palette { align-items: stretch; margin-top: 16px; padding-top: 10px; padding-bottom: 10px; border-radius: 0; }
+    .palette-item { flex-basis: 144px; height: 132px; padding-top: 24px; }
+    .mark-demo { gap: 96px; }
+    .code-snippet { width: 100%; box-sizing: border-box; }
+    .code-snippet .ann::before,
+    .code-snippet .ann::after { display: none; }
+    .code-snippet code.hljs,
+    .code-snippet:has(.code-snippet-copy) code.hljs { overflow: visible; overflow-wrap: anywhere; text-align: left; text-overflow: clip; white-space: pre-wrap; }
+    .code-snippet code.hljs { font-size: 11px; }
+    .code-snippet:has(.code-snippet-copy) code.hljs { overflow-wrap: normal; word-break: break-all; }
+    .code-snippet.directions-code-snippet { margin-top: 20px; }
+    .mark-code-snippet { padding-right: 0; overflow-x: auto; }
+    .mark-code-snippet code.hljs { overflow-wrap: normal; white-space: pre; word-break: normal; }
+    .stack-demo { display: grid; width: calc(100% + 40px); min-height: 120px; margin-left: -20px; padding: 0; overflow-x: auto; overscroll-behavior-x: contain; place-items: center; scrollbar-width: none; }
+    .stack-demo::-webkit-scrollbar { display: none; }
+    .stack-demo > .ann { --ann-label-max-width: 90px; transform: none; }
   }
 </style>
 </head>
@@ -279,7 +320,7 @@
   </button>
   <header class="hero">
     <h1>neat-annotations</h1>
-    <p class="page-intro">Neat hand-drawn annotations<span class="page-intro-rest"> for your page: arrows and <span class="ann ann-nw ann-amber" data-note="like this">handwritten labels</span>.<br>Pure CSS, no JavaScript, one small file.</span></p>
+    <p class="page-intro">Neat hand-drawn annotations<span class="page-intro-rest"> for your page: arrows and <span class="ann ann-nw ann-amber" data-note="like this">handwritten labels</span>.<span class="page-intro-details">Pure CSS, no JavaScript, one small file.</span></span></p>
     <nav class="hero-actions" aria-label="Project links">
       <a class="hero-action" href="#installation">Install</a>
       <a class="hero-action" href="https://github.com/syabro/neat-annotations" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -330,7 +371,7 @@
   </section>
 
   <h2>Directions</h2>
-  <div class="compass">
+  <div class="compass" role="region" aria-label="Direction examples" tabindex="0">
     <div class="compass-slot compass-nw"><span class="ann ann-nw" data-note=".ann-nw">target</span></div>
     <div class="compass-slot compass-n"><span class="ann ann-n" data-note=".ann-n">target</span></div>
     <div class="compass-slot compass-ne"><span class="ann ann-ne" data-note=".ann-ne">target</span></div>
@@ -342,48 +383,64 @@
     <div class="compass-slot compass-se"><span class="ann ann-se" data-note=".ann-se">target</span></div>
   </div>
   <div class="code-snippet directions-code-snippet">
-    <pre><code class="language-html">&lt;span class="ann <span class="ann ann-n" data-note="sets the direction">ann-n</span>" data-note=".ann-n"&gt;target&lt;/span&gt;</code></pre>
+    <pre><code class="language-html">&lt;span
+  class="ann <span class="ann ann-n" data-note="sets the direction">ann-n</span>"
+  data-note=".ann-n"
+&gt;
+  target
+&lt;/span&gt;</code></pre>
   </div>
 
   <h2>Colors</h2>
   <p class="palette-note">Five colors and an animated rainbow, plus a warm-gray default.</p>
-  <div class="palette palette-built-in">
-    <span class="ann ann-n" data-note="default">plain</span>
-    <span class="ann ann-n ann-amber" data-note="ann-amber">amber</span>
-    <span class="ann ann-n ann-blue" data-note="ann-blue">blue</span>
-    <span class="ann ann-n ann-green" data-note="ann-green">green</span>
-    <span class="ann ann-n ann-red" data-note="ann-red">red</span>
-    <span class="ann ann-n ann-purple" data-note="ann-purple">purple</span>
-    <span class="ann ann-n ann-rainbow" data-note="ann-rainbow">rainbow</span>
+  <div class="palette palette-built-in" role="region" aria-label="Built-in color examples" tabindex="0">
+    <div class="palette-item"><span class="ann ann-n" data-note="default">plain</span></div>
+    <div class="palette-item"><span class="ann ann-n ann-amber" data-note="ann-amber">amber</span></div>
+    <div class="palette-item"><span class="ann ann-n ann-blue" data-note="ann-blue">blue</span></div>
+    <div class="palette-item"><span class="ann ann-n ann-green" data-note="ann-green">green</span></div>
+    <div class="palette-item"><span class="ann ann-n ann-red" data-note="ann-red">red</span></div>
+    <div class="palette-item"><span class="ann ann-n ann-purple" data-note="ann-purple">purple</span></div>
+    <div class="palette-item"><span class="ann ann-n ann-rainbow" data-note="ann-rainbow">rainbow</span></div>
   </div>
   <div class="code-snippet palette-built-in-code-snippet">
-    <pre><code class="language-html">&lt;span class="ann ann-n <span class="ann ann-n ann-purple" data-note="sets the color">ann-purple</span>" data-note="ann-purple"&gt;purple&lt;/span&gt;</code></pre>
+    <pre><code class="language-html">&lt;span
+  class="ann ann-n <span class="ann ann-n ann-red" data-note="sets the color">ann-red</span>"
+  data-note="ann-red"
+&gt;
+  red
+&lt;/span&gt;</code></pre>
   </div>
   <h2>Custom colors</h2>
   <p class="palette-note">Set any CSS color directly with <code>--ann-color</code>.</p>
-  <div class="palette palette-custom">
-    <span class="ann ann-n" data-note="#111111" style="--ann-color: #111111">black</span>
-    <span class="ann ann-n" data-note="#ff1493" style="--ann-color: #ff1493">hot pink</span>
-    <span class="ann ann-n" data-note="#00c2d7" style="--ann-color: #00c2d7">cyan</span>
+  <div class="palette palette-custom" role="region" aria-label="Custom color examples" tabindex="0">
+    <div class="palette-item"><span class="ann ann-n" data-note="#111111" style="--ann-color: #111111">black</span></div>
+    <div class="palette-item"><span class="ann ann-n" data-note="#ff1493" style="--ann-color: #ff1493">hot pink</span></div>
+    <div class="palette-item"><span class="ann ann-n" data-note="#00c2d7" style="--ann-color: #00c2d7">cyan</span></div>
   </div>
   <div class="code-snippet palette-code-snippet">
-    <pre><code class="language-html">&lt;span class="ann ann-n" data-note="..." style="<span class="ann ann-n" data-note="any CSS color" style="--ann-color: #00c2d7">--ann-color: #00c2d7</span>"&gt;cyan&lt;/span&gt;</code></pre>
+    <pre><code class="language-html">&lt;span
+  class="ann ann-n"
+  data-note="..."
+  style="<span class="ann ann-n" data-note="any CSS color" style="--ann-color: #00c2d7">--ann-color: #00c2d7</span>"
+&gt;
+  cyan
+&lt;/span&gt;</code></pre>
   </div>
 
   <h2>Target highlight</h2>
   <div class="mark-demo">
     <div>
       <span class="mark-demo-label">Default</span>
-      <span class="ann ann-n ann-purple" data-note="adds a tint"><span class="mark-demo-badge">stable</span></span>
+      <span class="ann ann-n ann-red" data-note="adds a tint"><span class="mark-demo-badge">stable</span></span>
     </div>
     <div>
       <span class="mark-demo-label">No mark</span>
-      <span class="ann ann-n ann-purple ann-no-mark" data-note="keeps its own fill"><span class="mark-demo-badge">stable</span></span>
+      <span class="ann ann-n ann-red ann-no-mark" data-note="keeps its own fill"><span class="mark-demo-badge">stable</span></span>
     </div>
   </div>
   <div class="code-snippet code-snippet-multiline mark-code-snippet">
     <pre><code class="language-html">&lt;span
-  class="ann ann-n ann-purple <span class="ann ann-nw ann-blue" data-note="removes target tint" style="--ann-text-x: 30px">ann-no-mark</span>"
+  class="ann ann-n ann-red <span class="ann ann-nw ann-blue" data-note="removes target tint" style="--ann-text-x: 30px">ann-no-mark</span>"
   data-note="keeps its own fill"
 &gt;
   &lt;span class="badge"&gt;stable&lt;/span&gt;
@@ -394,7 +451,13 @@
   <p class="palette-note">Use it as a text marker: omit <code>data-note</code> to hide the arrow and label.</p>
   <div class="mark-only-demo">Ship when the <span class="ann ann-amber">migration guide</span> is ready.</div>
   <div class="code-snippet">
-    <pre><code class="language-html">&lt;p&gt;Ship when the &lt;span class="ann ann-amber"&gt;migration guide&lt;/span&gt; is ready.&lt;/p&gt;</code></pre>
+    <pre><code class="language-html">&lt;p&gt;
+  Ship when the
+  &lt;span class="ann ann-amber"&gt;
+    migration guide
+  &lt;/span&gt;
+  is ready.
+&lt;/p&gt;</code></pre>
   </div>
 
   <h2>Stack annotations</h2>
