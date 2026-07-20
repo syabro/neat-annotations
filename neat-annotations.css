@@ -62,7 +62,7 @@
 .ann[data-note=""]::before,
 .ann[data-note=""]::after { display: none; }
 
-.ann-amber { --ann-color: #b8751a; }
+.ann-amber { --ann-color: #b8751a; --ann-mark: light-dark(color-mix(in oklch, #ffb000 14%, transparent), color-mix(in oklch, #ffb000 22%, transparent)); }
 .ann-blue { --ann-color: #3b72c4; }
 .ann-green { --ann-color: #2f8f5b; }
 .ann-red { --ann-color: #c45a38; }

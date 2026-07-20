@@ -83,6 +83,24 @@
   .hero-action { display: inline-flex; align-items: center; margin: -10px -6px; padding: 10px 6px; color: var(--ink-2); font-size: 15px; font-weight: 500; line-height: 1; text-decoration: underline; text-underline-offset: 4px; }
   .hero-action:hover { color: var(--ink); }
   .hero-action:focus-visible { outline: 2px solid color-mix(in srgb, var(--link) 35%, transparent); outline-offset: 2px; }
+  @keyframes hero-mark-swipe {
+    0% { background-size: 0 100%; }
+    12%, 100% { background-size: 100% 100%; }
+  }
+  @keyframes hero-arrow-draw {
+    0%, 14% { clip-path: inset(0 100% 0 0); opacity: 0; }
+    16% { opacity: .9; }
+    35%, 100% { clip-path: inset(0); opacity: .9; }
+  }
+  @keyframes hero-label-reveal {
+    0%, 39% { opacity: 0; }
+    53%, 100% { opacity: .9; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero .ann { background: linear-gradient(var(--ann-mark), var(--ann-mark)) left center / 0 100% no-repeat; box-shadow: none; animation: hero-mark-swipe 1.6s linear 1s both; }
+    .hero .ann::before { animation: hero-arrow-draw 1.6s linear 1s both; }
+    .hero .ann::after { animation: hero-label-reveal 1.6s linear 1s both; }
+  }
   .mdtask-note,
   .palette-note { margin-top: 8px; color: var(--ink-2); }
   a { color: var(--link); text-decoration: none; }
