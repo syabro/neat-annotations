@@ -4,7 +4,6 @@
 
 .ann {
   --ann-color: oklch(0.62 0.005 30);
-  --ann-mark: color-mix(in srgb, var(--ann-color) 10%, transparent);
   --ann-mark: light-dark(color-mix(in oklch, var(--ann-color) 10%, transparent), oklch(from var(--ann-color) l calc(c * 1.35) h / 24%));
   --ann-font: 'Shantell Sans', cursive;
   --ann-target-gap: 5px;
@@ -70,7 +69,6 @@
 .ann-red { --ann-color: #c45a38; }
 .ann-purple { --ann-color: #8657c8; }
 .ann-rainbow {
-  --ann-color: #ff1493;
   --ann-color: oklch(0.65 0.28 var(--ann-rainbow-hue, 350deg));
 }
 .ann-no-mark { --ann-mark: transparent; }
