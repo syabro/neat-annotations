@@ -4,6 +4,7 @@
 
 .ann {
   --ann-color: oklch(0.62 0.005 30);
+  --ann-mark: color-mix(in srgb, var(--ann-color) 10%, transparent);
   --ann-mark: light-dark(color-mix(in oklch, var(--ann-color) 10%, transparent), oklch(from var(--ann-color) l calc(c * 1.35) h / 24%));
   --ann-font: 'Shantell Sans', cursive;
   --ann-target-gap: 5px;
@@ -40,6 +41,7 @@
   color: var(--ann-color);
   opacity: .9;
   white-space: normal;
+  overflow-wrap: anywhere;
   pointer-events: none;
 }
 
@@ -67,12 +69,28 @@
 .ann-green { --ann-color: #2f8f5b; }
 .ann-red { --ann-color: #c45a38; }
 .ann-purple { --ann-color: #8657c8; }
-.ann-rainbow { --ann-color: #ff1493; }
+.ann-rainbow {
+  --ann-color: #ff1493;
+  --ann-color: oklch(0.65 0.28 var(--ann-rainbow-hue, 350deg));
+}
 .ann-no-mark { --ann-mark: transparent; }
 
-@keyframes ann-rainbow-cycle { to { filter: hue-rotate(360deg); } }
+@property --ann-rainbow-hue {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 350deg;
+}
+
+@keyframes ann-rainbow-cycle { to { --ann-rainbow-hue: 710deg; } }
 @media (prefers-reduced-motion: no-preference) {
   .ann-rainbow { animation: ann-rainbow-cycle 3s linear infinite; }
+}
+
+@media (forced-colors: active) {
+  .ann::before {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
 }
 
 .ann-n::before {
