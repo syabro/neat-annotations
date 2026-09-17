@@ -3,7 +3,7 @@
    Labels look best with the Shantell Sans font (falls back to system cursive). */
 
 .ann {
-  --ann-color: oklch(0.62 0.005 30);
+  --ann-color: light-dark(oklch(0.62 0.005 30), #b8b8bd);
   --ann-mark: light-dark(color-mix(in oklch, var(--ann-color) 10%, transparent), oklch(from var(--ann-color) l calc(c * 1.35) h / 24%));
   --ann-font: 'Shantell Sans', cursive;
   --ann-target-gap: 5px;
@@ -63,11 +63,11 @@
 .ann[data-note=""]::before,
 .ann[data-note=""]::after { display: none; }
 
-.ann-amber { --ann-color: #b8751a; --ann-mark: light-dark(color-mix(in oklch, #ffb000 14%, transparent), color-mix(in oklch, #ffb000 22%, transparent)); }
-.ann-blue { --ann-color: #3b72c4; }
-.ann-green { --ann-color: #2f8f5b; }
-.ann-red { --ann-color: #c45a38; }
-.ann-purple { --ann-color: #8657c8; }
+.ann-amber { --ann-color: light-dark(#b8751a, #f0b45a); --ann-mark: light-dark(color-mix(in oklch, #ffb000 14%, transparent), color-mix(in oklch, #ffb000 22%, transparent)); }
+.ann-blue { --ann-color: light-dark(#3b72c4, #78a9ef); }
+.ann-green { --ann-color: light-dark(#2f8f5b, #67c792); }
+.ann-red { --ann-color: light-dark(#c45a38, #ee8a6e); }
+.ann-purple { --ann-color: light-dark(#8657c8, #b998ef); }
 .ann-rainbow {
   --ann-color: oklch(0.65 0.28 var(--ann-rainbow-hue, 350deg));
 }

@@ -54,7 +54,7 @@ A direction class names where the arrow points. For example, `ann-n` places the 
 
 ### Colors
 
-The default is warm gray. Six built-in classes change the arrow, label, and target highlight together:
+The default is a theme-aware warm gray. Six built-in classes change the arrow, label, and target highlight together, adapting to light and dark themes:
 
 <p align="center">
   <img src="assets/readme-colors.png" alt="Built-in annotation colors" width="1000">
@@ -70,6 +70,12 @@ Set any CSS color directly with `--ann-color`:
 
 ```html
 <span class="ann ann-n" data-note="..." style="--ann-color: #ff1493">hot pink</span>
+```
+
+Use `light-dark()` to adapt custom colors to light and dark themes:
+
+```html
+<span class="ann ann-n" data-note="..." style="--ann-color: light-dark(#111111, #f5f5f7)">adaptive</span>
 ```
 
 ### Highlight only
@@ -96,7 +102,7 @@ Set these variables directly on an annotated element:
 
 | Variable | Default | What it controls |
 | --- | --- | --- |
-| `--ann-color` | warm gray | arrow and label color |
+| `--ann-color` | theme-aware warm gray | arrow and label color |
 | `--ann-mark` | theme-aware tint | target highlight; `ann-no-mark` removes it |
 | `--ann-font` | `'Shantell Sans', cursive` | label font |
 | `--ann-target-gap` | `5px` | gap between target and arrow |

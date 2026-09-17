@@ -253,12 +253,6 @@
   .code-snippet-copy.is-copied .code-snippet-copy-icon { display: none; }
   .code-snippet-copy.is-copied .code-snippet-check-icon { display: block; }
   .usage-note { margin-top: 8px; color: var(--ink-2); font-size: 14px; }
-  :root[data-theme="dark"] main .ann:not(:where(.ann-rainbow)) { --ann-color: #b8b8bd; }
-  :root[data-theme="dark"] main .ann-amber { --ann-color: #f0b45a; }
-  :root[data-theme="dark"] main .ann-blue { --ann-color: #78a9ef; }
-  :root[data-theme="dark"] main .ann-green { --ann-color: #67c792; }
-  :root[data-theme="dark"] main .ann-red { --ann-color: #ee8a6e; }
-  :root[data-theme="dark"] main .ann-purple { --ann-color: #b998ef; }
   :root[data-theme="dark"] .palette-custom .palette-item:first-child .ann { --ann-color: #f5f5f7 !important; }
   :root[data-theme="dark"] .palette-custom .palette-item:first-child .ann::after { content: "#f5f5f7"; }
   :root[data-theme="dark"] .code-snippet [class^="hljs-"],
@@ -305,8 +299,7 @@
     .compass-slot,
     .palette-item { flex: 0 0 calc(100% - 72px); border-radius: 12px; background: var(--surface); box-shadow: 0 2px 8px light-dark(rgba(0, 0, 0, .1), rgba(0, 0, 0, .32)); scroll-snap-align: center; scroll-snap-stop: always; }
     .compass-slot { height: 160px; }
-    .compass .ann { --ann-color: #007aff; }
-    :root[data-theme="dark"] .compass .ann { --ann-color: #5ac8fa; }
+    .compass .ann { --ann-color: light-dark(#007aff, #5ac8fa); }
     .compass-copy { display: none; }
     .compass .ann-w { transform: translateX(-40px); }
     .compass .ann-e { transform: translateX(40px); }
