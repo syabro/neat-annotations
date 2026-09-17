@@ -3,8 +3,11 @@
    Labels look best with the Shantell Sans font (falls back to system cursive). */
 
 .ann {
-  --ann-color: light-dark(oklch(0.62 0.005 30), #b8b8bd);
-  --ann-mark: light-dark(color-mix(in oklch, var(--ann-color) 10%, transparent), oklch(from var(--ann-color) l calc(c * 1.35) h / 24%));
+  --ann-color: light-dark(#898584, #b8b8bd);
+  --ann-mark: light-dark(
+    color-mix(in oklch, var(--ann-color) 10%, transparent),
+    oklch(from var(--ann-color) l calc(c * 1.35) h / 24%)
+  );
   --ann-font: 'Shantell Sans', cursive;
   --ann-target-gap: 5px;
   --ann-label-gap: 6px;
@@ -63,7 +66,15 @@
 .ann[data-note=""]::before,
 .ann[data-note=""]::after { display: none; }
 
-.ann-amber { --ann-color: light-dark(#b8751a, #f0b45a); --ann-mark: light-dark(color-mix(in oklch, #ffb000 14%, transparent), color-mix(in oklch, #ffb000 22%, transparent)); }
+/* Amber text needs darker contrast, but the highlight uses bright yellow (#ffb000)
+   to avoid a muddy background. color-mix with transparent creates an even marker tint. */
+.ann-amber {
+  --ann-color: light-dark(#b8751a, #f0b45a);
+  --ann-mark: light-dark(
+    color-mix(in oklch, #ffb000 14%, transparent),
+    color-mix(in oklch, #ffb000 22%, transparent)
+  );
+}
 .ann-blue { --ann-color: light-dark(#3b72c4, #78a9ef); }
 .ann-green { --ann-color: light-dark(#2f8f5b, #67c792); }
 .ann-red { --ann-color: light-dark(#c45a38, #ee8a6e); }
