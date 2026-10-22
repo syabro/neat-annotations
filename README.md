@@ -102,7 +102,7 @@ Annotations can be nested to point at one target from different sides. Long note
 Use `ann-block` to annotate a whole block.
 
 ```html
-<p class="ann ann-block ann-blue ann-w">A rather long paragraph we can also annotate</p>
+<p class="ann ann-block ann-blue ann-w" data-note="Annotate the whole paragraph">A rather long paragraph we can also annotate</p>
 ```
 
 ## Fine-tuning
